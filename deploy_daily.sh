@@ -38,6 +38,15 @@ else
     git push -u origin main
 fi
 
+# 4. GitHub Pages 설정 (GitHub Actions로 배포되도록 설정)
+echo "GitHub Pages 설정 중..."
+gh api -X POST "repos/$USER_ID/$REPO_NAME/pages" -f "build_type=workflow" > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    echo "✅ GitHub Pages 설정 완료 (Source: GitHub Actions)"
+else
+    echo "⚠️ GitHub Pages 설정 실패 (이미 설정되어 있거나 권한 문제)"
+fi
+
 echo "=========================================="
 echo "   배포 완료!"
 echo "   주소: https://$USER_ID.github.io/$REPO_NAME/"
